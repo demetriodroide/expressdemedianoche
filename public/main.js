@@ -48,9 +48,7 @@ async function enviardatoseliminadosahorais(){
 
 /////////acaba eliminar
 ////////empieza actualizar
-
 document.getElementById(`${[i]}`).addEventListener("click",enviardatosactualizados);
-
 function enviardatosactualizados() {
 
   let titulo = document.querySelector("#titulolabel").value;
@@ -60,7 +58,6 @@ function enviardatosactualizados() {
     "titulo"      : `${ titulo }`,
     "descripcion" : `${ descripcion }`,
   }
-
   enviarUpdates(nuevaNoticiaactualizada);
 }
 async function enviarUpdates(){
