@@ -40,7 +40,9 @@ let noticiasRef = defaultDatabase.ref("noticias");
 server.get('/loadNoticias', (req, res) => {
 
     noticiasRef.once('value', function(snapshot) {
-        let noticias = Object.values( snapshot.val() );
+      //if no esta vacio snapshot creo la referencia 
+      // y si esta traigo noticias
+        let noticias = keys.values( snapshot.val() );
             res.send(noticias);        
     });
 });
@@ -57,7 +59,7 @@ server.post('/cargarNoticias', (req, res) => {
 ////////////////
   // delete method
   server.delete('/deleteNoticias', function (req, res) {
-    
+    console.log(req.body.noticia)
     let noticiaEliminada = req.body.noticia;
        firebase.database().ref("noticias/"+noticiaEliminada).remove();
           res.send('ok , fue deleteado')

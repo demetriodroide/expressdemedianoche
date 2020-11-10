@@ -11,12 +11,12 @@ async function getNoticias(){
       let titulo = document.createElement("h1");
       caja.appendChild(titulo);
       titulo.innerText = noticias[i].titulo;
-      titulo.id = `${[i]}`;
+      //titulo.id = `${[i]}+titulo`;
       
       let descripcion = document.createElement("h2");
       caja.appendChild(descripcion);
       descripcion.innerText = noticias[i].descripcion;
-      descripcion.id = `${[i]}`;
+      //descripcion.id = `${[i]}+descripcion`;
 
       let botonupdate = document.createElement("button");
       let botondelete = document.createElement("button");
@@ -45,19 +45,22 @@ async function enviardatoseliminadosahorais(){
       body: JSON.stringify({ "noticia" : [i]})
     })
   }
-
+/*
 /////////acaba eliminar
 ////////empieza actualizar
 document.getElementById(`${[i]}`).addEventListener("click",enviardatosactualizados);
 function enviardatosactualizados() {
 
-  let titulo = document.querySelector("#titulolabel").value;
-  let descripcion = document.querySelector("#titulotexto").value;
+
+  /*
+  let titulo = document.getElementById(`${[i]}+titulo`).value;
+  let descripcion = document.getElementById(`${[i]}+descripcion`).value;
   
   let nuevaNoticiaactualizada = {
     "titulo"      : `${ titulo }`,
     "descripcion" : `${ descripcion }`,
   }
+  
   enviarUpdates(nuevaNoticiaactualizada);
 }
 async function enviarUpdates(){
@@ -73,7 +76,7 @@ await fetch('http://localhost:8080/updateNoticias', {
    })
   })
 }
-
+*/
       };//cierra FOR
   
   }
