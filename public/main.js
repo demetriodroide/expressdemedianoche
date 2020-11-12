@@ -25,14 +25,14 @@ async function getNoticias(){
       caja.appendChild(descripcion);
       descripcion.innerText = noticias[i].descripcion;
 
-      let botonupdate = document.createElement("button");
       let botondelete = document.createElement("button");
+      let botonupdate = document.createElement("button");
       caja.appendChild(botondelete);
       caja.appendChild(botonupdate);
-      botonupdate.innerText = "update";
       botondelete.innerText = "delete";
-      botonupdate.id = `${[i]}`;
+      botonupdate.innerText = "update";
       botondelete.id = `${[i]}`;
+      botonupdate.id = `${[i+50]}`;
 
 //noticias[i].id;
 //console.log(noticias[i].id)
@@ -48,92 +48,63 @@ async function getNoticias(){
 /////////acaba eliminar
 
 ////////empieza actualizar
-document.getElementById(`${[i]}`).addEventListener("click",enviardatosactualizados);
+
+
+document.getElementById(`${[i+50]}`).addEventListener("click",enviardatosactualizados);
 
 function enviardatosactualizados() {
 
-let labeltitulo = document.createElement("label");
-labeltitulo.htmlFor = "titulolabelactualizar";
-
-let inputtitulo = document.createElement("input");
-inputtitulo.type = "text";
-inputtitulo.id = "titulolabelactualizar";
-inputtitulo.value = noticias[i].titulo;
-
-let cajaactualizar = document.createElement("div");
-cajaactualizar.className = "actualizarborde";
-document.querySelector("body").appendChild(cajaactualizar);
-
-cajaactualizar.appendChild(labeltitulo);
-cajaactualizar.appendChild(inputtitulo);
-
-
-
-
-/*
-
-//let labeldescripcion = document.createElement("label");
-//let inputdescripcion = document.createElement("input");
-
-labeltitulo.htmlFor = "titulolabelactualizar";
-inputtitulo.type = "text";
-inputtitulo.id = "titulolabelactualizar";
-inputtitulo.value = noticias[i].titulo;
-
-//labeldescripcion.htmlFor = "titulotextoactualizar";
-//inputdescripcion.type = "text";
-//inputtitulo.id = "titulotextoactualizar";
-//inputdescripcion.value = noticias[i].descripcion;
-
+  let labeltitulo = document.createElement("label");
+  labeltitulo.htmlFor = "titulolabelactualizar";
+  labeltitulo.innerText = noticias[i].titulo;
+  
+  let inputtitulo = document.createElement("input");
+  inputtitulo.type = "text";
+  inputtitulo.id = "titulolabelactualizar";
+  inputtitulo.value = noticias[i].titulo;
+  
   let cajaactualizar = document.createElement("div");
   cajaactualizar.className = "actualizarborde";
   document.querySelector("body").appendChild(cajaactualizar);
   
-  let tituloactualizar = document.createElement("h1");
-  cajaactualizar.appendChild(tituloactualizar);
-  titulo.innerText = noticias[i].tituloactualizar;
+  let botonenviar = document.createElement("button");
+  botonenviar.innerText = "enviar actualizacion";
   
-  let descripcionactualizar = document.createElement("h2");
-  cajaactualizar.appendChild(descripcionactualizar);
-  descripcion.innerText = noticias[i].descripcionactualizar;
-
+  let labeldescripcion = document.createElement("label");
+  labeldescripcion.htmlFor = "descripcionlabelactualizar";
+  labeldescripcion.innerText = noticias[i].descripcion;
+  
+  let inputdescripcion = document.createElement("input");
+  inputdescripcion.type = "text";
+  inputdescripcion.id = "descripcionlabelactualizar"
+  inputdescripcion.value = noticias[i].descripcion;
+  
   cajaactualizar.appendChild(labeltitulo);
-  //cajaactualizar.appendChild(labeldescripcion);
-
-  */
-
+  cajaactualizar.appendChild(inputtitulo);
+  cajaactualizar.appendChild(labeldescripcion);
+  cajaactualizar.appendChild(inputdescripcion);
+  cajaactualizar.appendChild(botonenviar);
+  
 /*
-  let titulo = document.getElementById(`${[i]}+titulo`).value;
-  let descripcion = document.getElementById(`${[i]}+descripcion`).value;
+///////////////// click evento y guardar noticia para enviar y actualizar ////////////////////
+  let inputtitulo = document.querySelector("#titulolabelactualizar").value;
+  let inputdescripcion = document.querySelector("#descripcionlabelactualizar").value;
   
   let nuevaNoticiaactualizada = {
-    "titulo"      : `${ titulo }`,
-    "descripcion" : `${ descripcion }`,
+    "titulo"      : `${ inputtitulo }`,
+    "descripcion" : `${ inputdescripcion }`,
   }
-  */
+  
   enviarUpdates(nuevaNoticiaactualizada);
-}
-async function enviarUpdates(){
 
-await fetch('http://localhost:8080/updateNoticias', {
-    method: 'put',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ "4" : 
-    {  
-           "descripcion": "la noticia numero dos",
-           "titulo": "esta actualiza22222333333334444444444"
-       }
-   })
-  })
+  */
 }
 
       };//cierra FOR
   
-  }
+    }
   getNoticias();
 
-
-  ////////////////////////////////
 // envio datos desde JS a firebase con input HTML
 
 
@@ -163,39 +134,20 @@ async function enviarNoticias(noticiaEnviada){
     body: JSON.stringify(noticiaEnviada)
   })
 }
-//
-/*
-document.querySelector("#pulsarparaactualizar").addEventListener("click",enviardatosactualizados);
-
-function enviardatosactualizados() {
-
-  let titulo = document.querySelector("#titulolabel").value;
-  let descripcion = document.querySelector("#titulotexto").value;
-  
-  let nuevaNoticiaactualizada = {
-    "titulo"      : `${ titulo }`,
-    "descripcion" : `${ descripcion }`,
-  }
-
-  enviarUpdates(nuevaNoticiaactualizada);
-}
-
 
 async function enviarUpdates(){
 
-await fetch('http://localhost:8080/updateNoticias', {
-    method: 'put',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ "4" : 
-
-    {  
-           "descripcion": "la noticia numero dos",
-           "titulo": "esta actualiza22222333333334444444444"
-       }
-   
-   
-   
-   })
-  })
-}
-*/
+  await fetch('http://localhost:8080/updateNoticias', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify( { "4"  : 
+      {  
+             "descripcion": "la noticia numero dos",
+             "titulo": "esta actualiza22222333333334444444444"
+         }
+        }
+     )
+    })
+  
+    
+  }
