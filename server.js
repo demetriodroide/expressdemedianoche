@@ -42,8 +42,15 @@ server.get('/loadNoticias', (req, res) => {
     noticiasRef.once('value', function(snapshot) {
       //if no esta vacio snapshot creo la referencia 
       // y si esta traigo noticias
-        let noticias = keys.values( snapshot.val() );
-            res.send(noticias);        
+        let noticiasValues = Object.values( snapshot.val() );
+        let noticiasKeys = Object.keys(snapshot.val()); 
+        let noticias = noticiasValues.map((value, position) => {
+          value.id = noticiasKeys[position];
+          return value;
+        });
+            res.send(noticias);       
+console.log(noticias);
+
     });
 });
 
