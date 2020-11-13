@@ -7,25 +7,14 @@ async function enviardatoseliminadosahorais(idNoticia){
     })
 }
 
-async function enviardatosactualizadosid(idNoticiaUpdate){
+async function enviardatosactualizadosid(id, datos){
 
   await fetch('http://localhost:8080/updateNoticias', {
       method: 'put',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify( { "noticia"  : idNoticiaUpdate })
+      body: JSON.stringify( { id  : datos })
     })
 }
-
-async function enviardatosactualizados(noticiaUpdate){
-
-  await fetch('http://localhost:8080/updateNoticias', {
-      method: 'put',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(noticiaUpdate)
-    })
-}
-
-
 
 async function getNoticias(){
     let response = await fetch('http://localhost:8080/loadNoticias')
@@ -51,21 +40,20 @@ async function getNoticias(){
       caja.appendChild(botonupdate);
       botondelete.innerText = "delete";
       botonupdate.innerText = "update";
-      botondelete.id = `${[i]}`;
-      botonupdate.id = `${[i+50]}`;
+      botondelete.id = `d${[i]}`;
+      botonupdate.id = `u${[i]}`;
 
-      document.getElementById(`${[i]}`).addEventListener("click",() => {
+      document.getElementById(`d${[i]}`).addEventListener("click",() => {
         enviardatoseliminadosahorais(noticias[i].id)
       });
 
-        document.getElementById(`${[i+50]}`).addEventListener("click", () => {
-          enviardatosactualizadosid(noticias[i].id)
-        });
+///////////////////////////// pasa una movida
 
-        document.getElementById(`${[i+50]}`).addEventListener("click", () => {
-          enviardatosactualizados(nuevaNoticiaActualizada)
-        });
+        document.getElementById(`u${[i]}`).addEventListener("click", (e) => {
+          //enviardatosactualizadosid(noticias[i].id, nuevaNoticiaActualizada)
 
+          console.log(e.target.id)
+        });
 
       };//cierra FOR
   
@@ -73,7 +61,7 @@ async function getNoticias(){
   getNoticias();
 
 /////////////////////////////////////////////////
-
+/*
 function enviarUpdates() {
 
   let labeltitulo = document.createElement("label");
@@ -120,7 +108,7 @@ function enviarUpdates() {
 
 }
 
-
+*/
 ///////////////////////////////////////////////
 // envio datos desde JS a firebase con input HTML
 document.querySelector("#pulsar").addEventListener("click",enviardatos);
