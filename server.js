@@ -70,15 +70,18 @@ server.post('/cargarNoticias', (req, res) => {
     let noticiaEliminada = req.body.noticia;
        firebase.database().ref("noticias/"+noticiaEliminada).remove();
           res.send('ok , fue deleteado')
+              console.log(noticiaEliminada)
   })
 
 ///////////////////
 // put method :)
 server.put('/updateNoticias', function (req, res) {
     
-    let noticiaActualizada = req.body;
-       firebase.database().ref("noticias").update(noticiaActualizada);
+  let noticiaUpdateId = req.body.noticia; // aqui doy ID
+    let noticiaActualizada = req.body; // aqui doy json resultante
+       firebase.database().ref("noticias/"+noticiaUpdateId).update(noticiaActualizada);
           res.send('ok, fue actualizado')
+          console.log(noticiaActualizada)
   })
 
 server.listen(listenPort, () => console.log(`Server listening on ${listenPort}`));

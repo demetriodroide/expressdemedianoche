@@ -7,6 +7,26 @@ async function enviardatoseliminadosahorais(idNoticia){
     })
 }
 
+async function enviardatosactualizadosid(idNoticiaUpdate){
+
+  await fetch('http://localhost:8080/updateNoticias', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify( { "noticia"  : idNoticiaUpdate })
+    })
+}
+
+async function enviardatosactualizados(noticiaUpdate){
+
+  await fetch('http://localhost:8080/updateNoticias', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(noticiaUpdate)
+    })
+}
+
+
+
 async function getNoticias(){
     let response = await fetch('http://localhost:8080/loadNoticias')
     let noticias = await response.json();
@@ -34,25 +54,27 @@ async function getNoticias(){
       botondelete.id = `${[i]}`;
       botonupdate.id = `${[i+50]}`;
 
-//noticias[i].id;
-//console.log(noticias[i].id)
-
-      ///// hasta aqui muestra datos
-      ///// y empieza eliminar datos mediante boton 
-
       document.getElementById(`${[i]}`).addEventListener("click",() => {
         enviardatoseliminadosahorais(noticias[i].id)
       });
 
+        document.getElementById(`${[i+50]}`).addEventListener("click", () => {
+          enviardatosactualizadosid(noticias[i].id)
+        });
 
-/////////acaba eliminar
+        document.getElementById(`${[i+50]}`).addEventListener("click", () => {
+          enviardatosactualizados(nuevaNoticiaActualizada)
+        });
 
-////////empieza actualizar
 
+      };//cierra FOR
+  
+    }
+  getNoticias();
 
-document.getElementById(`${[i+50]}`).addEventListener("click",enviardatosactualizados);
+/////////////////////////////////////////////////
 
-function enviardatosactualizados() {
+function enviarUpdates() {
 
   let labeltitulo = document.createElement("label");
   labeltitulo.htmlFor = "titulolabelactualizar";
@@ -85,29 +107,22 @@ function enviardatosactualizados() {
   cajaactualizar.appendChild(inputdescripcion);
   cajaactualizar.appendChild(botonenviar);
   
-/*
 ///////////////// click evento y guardar noticia para enviar y actualizar ////////////////////
   let inputtitulo = document.querySelector("#titulolabelactualizar").value;
   let inputdescripcion = document.querySelector("#descripcionlabelactualizar").value;
   
-  let nuevaNoticiaactualizada = {
+  let nuevaNoticiaActualizada = {
     "titulo"      : `${ inputtitulo }`,
     "descripcion" : `${ inputdescripcion }`,
   }
   
-  enviarUpdates(nuevaNoticiaactualizada);
+  enviarUpdates(nuevaNoticiaActualizada);
 
-  */
 }
 
-      };//cierra FOR
-  
-    }
-  getNoticias();
 
+///////////////////////////////////////////////
 // envio datos desde JS a firebase con input HTML
-
-
 document.querySelector("#pulsar").addEventListener("click",enviardatos);
 
 function enviardatos() {
@@ -135,19 +150,3 @@ async function enviarNoticias(noticiaEnviada){
   })
 }
 
-async function enviarUpdates(){
-
-  await fetch('http://localhost:8080/updateNoticias', {
-      method: 'put',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify( { "4"  : 
-      {  
-             "descripcion": "la noticia numero dos",
-             "titulo": "esta actualiza22222333333334444444444"
-         }
-        }
-     )
-    })
-  
-    
-  }
