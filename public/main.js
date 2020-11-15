@@ -52,7 +52,7 @@ async function getNoticias(){
         document.getElementById(`u${[i]}`).addEventListener("click",() => {
         //function pintarFormulario(noticias[i].titulo, )
         //console.log(pintarFormulario);
-        pintarFormulario() 
+        pintarFormulario(noticias) 
          // enviarUpdates(nuevaNoticiaActualizada);
           //enviardatosactualizadosid(noticias[i].id, nuevaNoticiaActualizada)
         });
