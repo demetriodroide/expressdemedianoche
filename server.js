@@ -78,7 +78,7 @@ server.post('/cargarNoticias', (req, res) => {
 server.put('/updateNoticias', function (req, res) {
     
   let noticiaUpdateId = req.body.noticia; // aqui doy ID
-    let noticiaActualizada = req.body; // aqui doy json resultante
+  let noticiaActualizada = req.body.datos; // aqui doy json resultante
        firebase.database().ref("noticias/"+noticiaUpdateId).update(noticiaActualizada);
           res.send('ok, fue actualizado')
           console.log(noticiaActualizada)

@@ -7,12 +7,12 @@ async function enviardatoseliminadosahorais(idNoticia){
     })
 }
 
-async function enviardatosactualizadosid(id, datos){
+async function enviarUpdates(idNoticia, datos){
 
   await fetch('http://localhost:8080/updateNoticias', {
       method: 'put',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify( { id, datos })
+      body: JSON.stringify({ "noticia" : idNoticia, "datos" : datos })
     })
 }
 
@@ -50,19 +50,35 @@ async function getNoticias(){
 ///////////////////////////// pasa una movida
 
         document.getElementById(`u${[i]}`).addEventListener("click",() => {
-        //function pintarFormulario(noticias[i].titulo, )
-        //console.log(pintarFormulario);
+        
         pintarFormulario(noticias[i]) 
+// una vez pintado el formulario de actualizacion tienes q hacer click a ENVIAR actualizacion para luego pasarle los datos nuevos
+///////////////// click evento y guardar noticia para enviar y actualizar ////////////////////       
+            document.querySelector("#botonenviar").addEventListener("click", () => {
+               enviaralgoqseactualiza(noticias[i].id);
+        
          // enviarUpdates(nuevaNoticiaActualizada);
           //enviardatosactualizadosid(noticias[i].id, nuevaNoticiaActualizada)
+         });
         });
-
       };//cierra FOR
   
     }
     
   getNoticias();
+//////////////////// nueva funcion
+  function enviaralgoqseactualiza(idNoticia){
+                    
+    let inputtitulo = document.querySelector("#titulolabelactualizar").value;
+    let inputdescripcion = document.querySelector("#descripcionlabelactualizar").value;
+      
+    let nuevaNoticiaActualizada = {
+        "titulo"      : `${ inputtitulo }`,
+        "descripcion" : `${ inputdescripcion }`
+      }
 
+      enviarUpdates(idNoticia, nuevaNoticiaActualizada);
+    }
 /////////////////////////////////////////////////
 function pintarFormulario(noticia) { // sigue sin tener las noticias para hacer el click :)
 
@@ -81,7 +97,7 @@ function pintarFormulario(noticia) { // sigue sin tener las noticias para hacer 
   
   let botonenviar = document.createElement("button");
   botonenviar.innerText = "enviar actualizacion";
-  botonenviar.id = "botonenviar"
+  botonenviar.id = "botonenviar";
   
   let labeldescripcion = document.createElement("label");
   labeldescripcion.htmlFor = "descripcionlabelactualizar";
@@ -98,27 +114,11 @@ function pintarFormulario(noticia) { // sigue sin tener las noticias para hacer 
   cajaactualizar.appendChild(inputdescripcion);
   cajaactualizar.appendChild(botonenviar);
 }
-///////////////// click evento y guardar noticia para enviar y actualizar ////////////////////
-/*
-document.querySelector("#botonenviar").addEventListener("click", () => {
-
- enviarUpdates(nuevaNoticiaActualizada);
-
-  let inputtitulo = document.querySelector("#titulolabelactualizar").value;
-  let inputdescripcion = document.querySelector("#descripcionlabelactualizar").value;
-  
-  let nuevaNoticiaActualizada = {
-    "titulo"      : `${ inputtitulo }`,
-    "descripcion" : `${ inputdescripcion }`
-  }
-  
-});
-*/
 ///////////////////////////////////////////////
 // envio datos desde JS a firebase con input HTML
 document.querySelector("#pulsar").addEventListener("click", enviardatos);
 
-function enviardatos() {
+function enviardatos(){
 
   let titulo = document.querySelector("#titulolabel").value;
   let descripcion = document.querySelector("#titulotexto").value;
