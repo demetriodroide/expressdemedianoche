@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const server = express();
 const listenPort = 8080;
 
-const staticFilesPath = express.static('public');
+const staticFilesPath = express.static('public'); // carpeta de express donde se guardan los archivos de FRONT
 server.use(staticFilesPath);
 
 server.use(bodyParser.urlencoded({ extended: false }));
@@ -39,12 +39,12 @@ let noticiasRef = defaultDatabase.ref("noticias");
 // get METHOD
 server.get('/loadNoticias', (req, res) => {
 
-    noticiasRef.once('value', function(snapshot) {
+    noticiasRef.once('value', function(snapshot) { // once en vez de on, se ejecuta 1 sola vez
       //if no esta vacio snapshot creo la referencia 
       // y si esta traigo noticias
-        let noticiasValues = Object.values( snapshot.val() );
-        let noticiasKeys = Object.keys(snapshot.val()); 
-        let noticias = noticiasValues.map((value, position) => {
+        let noticiasValues = Object.values( snapshot.val() ); // object.entries los 3 forma de recibir datos 
+        let noticiasKeys = Object.keys(snapshot.val()); // del array 
+        let noticias = noticiasValues.map((value, position) => { // bucle q devuelve un array
           value.id = noticiasKeys[position];
           return value;
         });
@@ -67,7 +67,7 @@ server.post('/cargarNoticias', (req, res) => {
   // delete method
   server.delete('/deleteNoticias', function (req, res) {
     console.log(req.body.noticia)
-    let noticiaEliminada = req.body.noticia;
+    let noticiaEliminada = req.body.noticia; // solo doy id referencia para hacer el remove
        firebase.database().ref("noticias/"+noticiaEliminada).remove();
           res.send('ok , fue deleteado')
               console.log(noticiaEliminada)
